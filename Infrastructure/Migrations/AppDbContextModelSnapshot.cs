@@ -41,7 +41,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("T", (string)null);
+                    b.ToTable("Ticket", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("EntityBase<Ticket>");
 
