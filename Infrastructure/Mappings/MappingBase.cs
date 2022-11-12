@@ -3,25 +3,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Mappings;
 
-public class MappingBase<T>
+public class MappingBase<T> where T : class
 {
     private readonly ModelBuilder _modelBuilder;
 
     public MappingBase(ModelBuilder modelBuilder)
     {
         _modelBuilder = modelBuilder;
-        BaseMapping<EntityBase<T>>();
+        BaseMapping();
     }
 
     public ModelBuilder GetBuilder() => _modelBuilder;
 
-    private void BaseMapping<TS>() where TS : EntityBase<T>
+    private void BaseMapping()
     {
-        _modelBuilder.Entity<TS>(entity =>
-        {
-            entity.ToTable(typeof(T).Name);
-            entity.HasKey(p => p.Id);
-            entity.Property(p => p.Id).HasDefaultValueSql("NEWID()");
-        });
+        _modelBuilder.Entity(typeof(T)).ToTable(typeof(T).Name);
+        _modelBuilder.Entity(typeof(T)).HasKey("Id");
+        _modelBuilder.Entity(typeof(T)).Property("Id").HasDefaultValueSql("NEWID()");
     }
 }

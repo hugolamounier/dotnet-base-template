@@ -22,7 +22,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entities.EntityBase<Domain.Entities.Ticket>", b =>
+            modelBuilder.Entity("Domain.Entities.Ticket", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -32,30 +32,15 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("UpdateAt")
                         .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Ticket", (string)null);
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("EntityBase<Ticket>");
-
-                    b.UseTphMappingStrategy();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Ticket", b =>
-                {
-                    b.HasBaseType("Domain.Entities.EntityBase<Domain.Entities.Ticket>");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasDiscriminator().HasValue("Ticket");
+                    b.HasKey("Id");
+
+                    b.ToTable("Ticket", (string)null);
                 });
 #pragma warning restore 612, 618
         }
